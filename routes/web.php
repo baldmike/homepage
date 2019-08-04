@@ -19,3 +19,7 @@ Route::get('/createAnimal', 'SpaController@index');
 
 Route::get('/{any}', 'SpaController@notFound')->where('any', '.*');
 // Auth::routes();
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
