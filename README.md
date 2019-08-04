@@ -9,6 +9,9 @@ php artisan key:generate
 
 ``` 
 
+change .env.example to simple .env
+
+
 set up your database and update the following lines in .ENV file (this assumes a mysql db):
 ```
 DB_CONNECTION=mysql
@@ -18,6 +21,8 @@ DB_DATABASE={ WHATEVER YOU NAMED YOUR SCHEMA }
 DB_USERNAME={ YOUR USERNAME }
 DB_PASSWORD={ YOUR PASSWORD }
 ```
+migrate database tables
+`php artisan migrate`
 
 install Passport and generate client tokens:
 ```
