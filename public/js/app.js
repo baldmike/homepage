@@ -1720,6 +1720,22 @@ module.exports = function isBuffer (obj) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+var _name$components$data;
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -1731,18 +1747,66 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
-/* harmony default export */ __webpack_exports__["default"] = ({
+/* harmony default export */ __webpack_exports__["default"] = (_name$components$data = {
   name: 'dashboard',
   components: {},
   data: function data() {
-    return {};
+    return {
+      weatherData: [],
+      temp: '',
+      lat: '',
+      lon: '',
+      ampm: 'am'
+    };
   },
   computed: Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['isAuthenticated', 'currentUser']),
   methods: {
     init: function init() {}
   },
-  created: function created() {}
-});
+  created: function created() {
+    this.geolocation();
+  }
+}, _defineProperty(_name$components$data, "methods", {
+  getWeather: function getWeather(url) {
+    var _this = this;
+
+    axios.get(url).then(function (response) {
+      _this.weatherData = response.data;
+      _this.temp = Math.floor((_this.weatherData.main.temp - 273.15) * 9 / 5 + 32);
+      console.log(response.data);
+    })["catch"](function (error) {
+      console.log(error);
+    });
+  },
+  geolocation: function geolocation() {
+    var _this2 = this;
+
+    navigator.geolocation.getCurrentPosition(function (position) {
+      _this2.lat = position.coords.latitude;
+      _this2.lon = position.coords.longitude;
+
+      _this2.getWeather("https://cors-anywhere.herokuapp.com/http://api.openweathermap.org/data/2.5/weather?lat=".concat(_this2.lat, "&lon=").concat(_this2.lon, "&APPID=4184ae2eac1d3a7f63689ed17eb87201"));
+    });
+  }
+}), _defineProperty(_name$components$data, "computed", {
+  theTime: function theTime() {
+    var today = new Date();
+    var hour = today.getHours();
+    var minutes = today.getMinutes();
+
+    if (hour > 12) {
+      hour -= 12;
+      this.ampm = 'pm';
+    }
+
+    if (minutes < 10) {
+      minutes = '0' + minutes;
+    }
+
+    var todayNow = hour + ':' + minutes + this.ampm;
+    return todayNow;
+  }
+}), _name$components$data);
 
 /***/ }),
 
@@ -1886,12 +1950,10 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-//
-//
-//
-//
-//
-//
+var _name$data$methods$co;
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -1909,15 +1971,29 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
-/* harmony default export */ __webpack_exports__["default"] = ({
+/* harmony default export */ __webpack_exports__["default"] = (_name$data$methods$co = {
   name: "NavBar",
+  data: function data() {
+    return {
+      weatherData: [],
+      temp: ''
+    };
+  },
   methods: {
     logout: function logout() {
       this.$store.dispatch('logout');
     }
   },
-  computed: Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['isAuthenticated'])
-});
+  computed: {}
+}, _defineProperty(_name$data$methods$co, "computed", Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['isAuthenticated'])), _defineProperty(_name$data$methods$co, "mounted", function mounted() {// axios.get('https://cors-anywhere.herokuapp.com/http://api.openweathermap.org/data/2.5/weather?zip=60641,us&APPID=4184ae2eac1d3a7f63689ed17eb87201')
+  // .then((response) => {
+  //     this.weatherData = response.data;
+  //     this.temp = Math.floor((this.weatherData.main.temp) - 273.15) * 9/5 + 32;
+  // })
+  // .catch(error => {
+  //     console.log("GET WEATHER ERROR: " + error);
+  // });
+}), _name$data$methods$co);
 
 /***/ }),
 
@@ -21523,7 +21599,7 @@ var VBTooltip = {
 /*!*************************************************!*\
   !*** ./node_modules/bootstrap-vue/esm/index.js ***!
   \*************************************************/
-/*! exports provided: BVConfigPlugin, BVConfig, BootstrapVue, install, setConfig, default, componentsPlugin, BVModalPlugin, BVToastPlugin, AlertPlugin, BAlert, BadgePlugin, BBadge, BreadcrumbPlugin, BBreadcrumb, BBreadcrumbItem, ButtonPlugin, BButton, BButtonClose, ButtonGroupPlugin, BButtonGroup, ButtonToolbarPlugin, BButtonToolbar, CardPlugin, BCard, BCardBody, BCardFooter, BCardGroup, BCardHeader, BCardImg, BCardImgLazy, BCardSubTitle, BCardText, BCardTitle, CarouselPlugin, BCarousel, BCarouselSlide, CollapsePlugin, BCollapse, DropdownPlugin, BDropdown, BDropdownItem, BDropdownItemButton, BDropdownDivider, BDropdownForm, BDropdownGroup, BDropdownHeader, BDropdownText, EmbedPlugin, BEmbed, FormPlugin, BForm, BFormDatalist, BFormText, BFormInvalidFeedback, BFormValidFeedback, FormCheckboxPlugin, BFormCheckbox, BFormCheckboxGroup, FormFilePlugin, BFormFile, FormGroupPlugin, BFormGroup, FormInputPlugin, BFormInput, FormRadioPlugin, BFormRadio, BFormRadioGroup, FormSelectPlugin, BFormSelect, FormTextareaPlugin, BFormTextarea, ImagePlugin, BImg, BImgLazy, InputGroupPlugin, BInputGroup, BInputGroupAddon, BInputGroupAppend, BInputGroupPrepend, BInputGroupText, JumbotronPlugin, BJumbotron, LayoutPlugin, BContainer, BRow, BCol, BFormRow, LinkPlugin, BLink, ListGroupPlugin, BListGroup, BListGroupItem, MediaPlugin, BMedia, BMediaAside, BMediaBody, ModalPlugin, BModal, NavPlugin, BNav, BNavForm, BNavItem, BNavItemDropdown, BNavText, NavbarPlugin, BNavbar, BNavbarBrand, BNavbarNav, BNavbarToggle, PaginationPlugin, BPagination, PaginationNavPlugin, BPaginationNav, PopoverPlugin, BPopover, ProgressPlugin, BProgress, BProgressBar, SpinnerPlugin, BSpinner, TablePlugin, BTable, BTableLite, TabsPlugin, BTabs, BTab, ToastPlugin, BToast, BToaster, TooltipPlugin, BTooltip, directivesPlugin, VBModalPlugin, VBModal, VBPopoverPlugin, VBPopover, VBScrollspyPlugin, VBScrollspy, VBTogglePlugin, VBToggle, VBTooltipPlugin, VBTooltip */
+/*! exports provided: componentsPlugin, BVModalPlugin, BVToastPlugin, AlertPlugin, BAlert, BadgePlugin, BBadge, BreadcrumbPlugin, BBreadcrumb, BBreadcrumbItem, ButtonPlugin, BButton, BButtonClose, ButtonGroupPlugin, BButtonGroup, ButtonToolbarPlugin, BButtonToolbar, CardPlugin, BCard, BCardBody, BCardFooter, BCardGroup, BCardHeader, BCardImg, BCardImgLazy, BCardSubTitle, BCardText, BCardTitle, CarouselPlugin, BCarousel, BCarouselSlide, CollapsePlugin, BCollapse, DropdownPlugin, BDropdown, BDropdownItem, BDropdownItemButton, BDropdownDivider, BDropdownForm, BDropdownGroup, BDropdownHeader, BDropdownText, EmbedPlugin, BEmbed, FormPlugin, BForm, BFormDatalist, BFormText, BFormInvalidFeedback, BFormValidFeedback, FormCheckboxPlugin, BFormCheckbox, BFormCheckboxGroup, FormFilePlugin, BFormFile, FormGroupPlugin, BFormGroup, FormInputPlugin, BFormInput, FormRadioPlugin, BFormRadio, BFormRadioGroup, FormSelectPlugin, BFormSelect, FormTextareaPlugin, BFormTextarea, ImagePlugin, BImg, BImgLazy, InputGroupPlugin, BInputGroup, BInputGroupAddon, BInputGroupAppend, BInputGroupPrepend, BInputGroupText, JumbotronPlugin, BJumbotron, LayoutPlugin, BContainer, BRow, BCol, BFormRow, LinkPlugin, BLink, ListGroupPlugin, BListGroup, BListGroupItem, MediaPlugin, BMedia, BMediaAside, BMediaBody, ModalPlugin, BModal, NavPlugin, BNav, BNavForm, BNavItem, BNavItemDropdown, BNavText, NavbarPlugin, BNavbar, BNavbarBrand, BNavbarNav, BNavbarToggle, PaginationPlugin, BPagination, PaginationNavPlugin, BPaginationNav, PopoverPlugin, BPopover, ProgressPlugin, BProgress, BProgressBar, SpinnerPlugin, BSpinner, TablePlugin, BTable, BTableLite, TabsPlugin, BTabs, BTab, ToastPlugin, BToast, BToaster, TooltipPlugin, BTooltip, directivesPlugin, VBModalPlugin, VBModal, VBPopoverPlugin, VBPopover, VBScrollspyPlugin, VBScrollspy, VBTogglePlugin, VBToggle, VBTooltipPlugin, VBTooltip, BVConfigPlugin, BVConfig, BootstrapVue, install, setConfig, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -29055,7 +29131,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".mainPlace[data-v-01ab55f4] {\n  background-color: #3490dc;\n}", ""]);
+exports.push([module.i, ".body[data-v-01ab55f4] {\n  background-image: url(\"https://source.unsplash.com/random\");\n  background-size: cover;\n  background-repeat: no-repeat;\n  background-position: center;\n  background-attachment: fixed;\n  height: 100vh;\n  width: 100vw;\n}\n.api-strip[data-v-01ab55f4] {\n  text-align: center;\n  color: white;\n  font-size: 1vw;\n  background: black;\n  opacity: 0.7;\n  height: 100vh;\n}\n.to-do[data-v-01ab55f4] {\n  text-align: center;\n  color: white;\n  font-size: 1vw;\n  background: black;\n  opacity: 0.7;\n  height: 100vh;\n}", ""]);
 
 // exports
 
@@ -50829,12 +50905,43 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "mainPlace" },
-    [_c("b-row", [_c("b-col", [_c("h1", [_vm._v("HELLO, WORLD")])])], 1)],
-    1
-  )
+  return _c("b-container", { attrs: { fluid: "" } }, [
+    _c(
+      "div",
+      { staticClass: "body" },
+      [
+        _c(
+          "b-row",
+          { staticClass: "api-strip" },
+          [
+            _c("b-col", { attrs: { cols: "4" } }, [
+              _c("p", [
+                _vm._v(
+                  _vm._s(_vm.temp) +
+                    "° " +
+                    _vm._s(_vm.weatherData.weather[0].description)
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("b-col", { attrs: { cols: "4" } }, [
+              _c("p", [_vm._v(_vm._s(_vm.theTime))])
+            ]),
+            _vm._v(" "),
+            _c("b-col", { attrs: { cols: "4" } }, [
+              _c("p", [_vm._v(_vm._s(_vm.weatherData.name))])
+            ]),
+            _vm._v(" "),
+            _c("b-col", { attrs: { cols: "4" } }, [
+              _c("h1", [_vm._v("To Do's")])
+            ])
+          ],
+          1
+        )
+      ],
+      1
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -51017,29 +51124,10 @@ var render = function() {
         [
           _c("b-navbar-toggle", { attrs: { target: "nav_collapse" } }),
           _vm._v(" "),
-          _c("b-navbar-brand", { attrs: { to: "/dashboard" } }, [
-            _vm._v("Home")
-          ]),
-          _vm._v(" "),
           _c(
             "b-collapse",
             { attrs: { "is-nav": "", id: "nav_collapse" } },
             [
-              _c(
-                "b-navbar-nav",
-                [
-                  _vm.isAuthenticated
-                    ? _c("b-nav-item", { attrs: { to: "#" } }, [
-                        _c("i", {
-                          staticClass: "fas fa-plus",
-                          staticStyle: { "font-size": "1.5rem" }
-                        })
-                      ])
-                    : _vm._e()
-                ],
-                1
-              ),
-              _vm._v(" "),
               _c(
                 "b-navbar-nav",
                 { staticClass: "ml-auto" },
@@ -51123,8 +51211,6 @@ var render = function() {
           width: "100%"
         }
       }),
-      _vm._v(" "),
-      _c("nav-bar"),
       _vm._v(" "),
       !_vm.isAuthenticated
         ? _c(_vm.loginComponent, { tag: "login-component" })

@@ -3,14 +3,8 @@
         <b-navbar toggleable="md" type="light" variant="light" fixed="top">
             <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
 
-            <b-navbar-brand to="/dashboard">Home</b-navbar-brand>
             <b-collapse is-nav id="nav_collapse">
 
-                <b-navbar-nav>
-                    <b-nav-item v-if="isAuthenticated" to="#"><i class="fas fa-plus" style="font-size: 1.5rem;"></i></b-nav-item>
-                    <!-- <b-nav-item v-if="isAuthenticated" to="cats">Cats</b-nav-item> -->
-                </b-navbar-nav>
-                    
                 <b-navbar-nav class="ml-auto">
                     <b-nav-item v-if="isAuthenticated" @click="logout" right>Logout</b-nav-item>
                 </b-navbar-nav>
@@ -26,14 +20,37 @@
 
     export default {
         name: "NavBar",
+        data() {
+            return {
+                weatherData: [],
+                temp: '',
+            }
+        },
         methods: {
 
             logout() {
                 this.$store.dispatch('logout');
-            }
+            },
+
         },
+        computed: {
+            
+        },
+            
+        
         
         computed: mapGetters(['isAuthenticated']),
+
+        mounted() {
+            // axios.get('https://cors-anywhere.herokuapp.com/http://api.openweathermap.org/data/2.5/weather?zip=60641,us&APPID=4184ae2eac1d3a7f63689ed17eb87201')
+            // .then((response) => {
+            //     this.weatherData = response.data;
+            //     this.temp = Math.floor((this.weatherData.main.temp) - 273.15) * 9/5 + 32;
+            // })
+            // .catch(error => {
+            //     console.log("GET WEATHER ERROR: " + error);
+            // });
+        }
             
     }
 </script>
@@ -44,3 +61,4 @@
         margin-bottom: 70px;
     }
 </style>
+
